@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Target Calculator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        main {
+            flex-grow: 1;
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            text-align: center;
+            color: #34495e;
+            margin-bottom: 1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        th {
+            background-color: #34495e;
+            color: #fff;
+        }
+        tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+        input[type="number"] {
+            width: 90%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            transition: border-color 0.3s ease-in-out;
+        }
+        input[type="number"]:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+        button {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 auto;
+            display: block;
+            transition: background-color 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: #c0392b;
+        }
+        footer {
+            background-color: #34495e;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: auto;
+        }
+        #targetAchieved {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin: 1rem 0;
+        }
+        #resetButton {
+            background-color: #3498db;
+            margin-top: 1rem;
+        }
+        #resetButton:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Online Target Calculator</h1>
+    </header>
+    <main>
+        <h2>Task Type and KM Entry</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Task Type</th>
+                    <th>Enter Task KM</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Explicit Lane Lines Lane Adjacencies</td>
+                    <td><input type="number" placeholder="Enter KM" aria-label="Explicit Lane Lines Lane Adjacencies"></td>
+                </tr>
+                <tr>
+                    <td>Explicit Lane Lines Lane Adjacencies QA 3D</td>
+                    <td><input type="number" placeholder="Enter KM" aria-label="Explicit Lane Lines Lane Adjacencies QA 3D"></td>
+                </tr>
+                <tr>
+                    <td>Navigable Boundaries Legacy</td>
+                    <td><input type="number" placeholder="Enter KM" aria-label="Navigable Boundaries Legacy"></td>
+                </tr>
+                <tr>
+                    <td>Navigable Boundaries QA 3D Legacy</td>
+                    <td><input type="number" placeholder="Enter KM" aria-label="Navigable Boundaries QA 3D Legacy"></td>
+                </tr>
+                <tr>
+                    <td>Intersection Zoi Legacy</td>
+                    <td><input type="number" placeholder="Enter KM" aria-label="Intersection Zoi Legacy"></td>
+                </tr>
+                <tr>
+                    <td>Intersection Zoi QA 2D Legacy</td>
+                    <td><input type="number" placeholder="Enter KM" aria-label="Intersection Zoi QA 2D Legacy"></td>
+                </tr>
+                <tr>
+                    <td>Road Paint Zois Legacy</td>
+                    <td><input type="number" placeholder="Enter KM" aria-label="Road Paint Zois Legacy"></td>
+                </tr>
+                <tr>
+                    <td>Road Paint Zois QA 3D Legacy</td>
+                    <td><input type="number" placeholder="Enter KM" aria-label="Road Paint Zois QA 3D Legacy"></td>
+                </tr>
+                <tr>
+                    <td>Legacy Signs Speed Limit Values Sign Associations</td>
+                    <td><input type="number" placeholder="Enter KM" aria-label="Legacy Signs Speed Limit Values Sign Associations"></td>
+                </tr>
+                <tr>
+                    <td>Legacy Signs Speed Limit Values Sign Associations 3D</td>
+                    <td><input type="number" placeholder="Enter KM" aria-label="Legacy Signs Speed Limit Values Sign Associations 3D"></td>
+                </tr>
+                <tr>
+                    <td>Legacy QA 3D</td>
+                    <td><input type="number" placeholder="Enter KM" aria-label="Legacy QA 3D"></td>
+                </tr>
+            </tbody>
+        </table>
+        <p id="targetAchieved">Target Achieved: 0%</p>
+        <button onclick="calculateTarget()">Calculate Target</button>
+        <button id="resetButton" onclick="resetFields()">Reset</button>
+    </main>
+    <footer>
+        <p>&copy; 2024 Online Target Calculator. All Rights Reserved.</p>
+    </footer>
+    <script>
+        function calculateTarget() {
+            const taskInputs = document.querySelectorAll('input[type="number"]');
+            const taskData = {};
+
+            taskInputs.forEach((input) => {
+                const taskName = input.getAttribute('aria-label');
+                const value = parseFloat(input.value);
+
+                if (!isNaN(value) && value >= 0) {
+                    taskData[taskName] = value / 1000; // Convert to KM (divide by 1000)
+                }
+            });
+
+            if (Object.keys(taskData).length === 0) {
+                alert('Please fill out at least one field with valid numbers.');
+                return;
+            }
+
+            fetch('/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(taskData),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    document.getElementById('targetAchieved').textContent = `Target Achieved: ${data.achieved}%`;
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('There was an issue calculating the target. Please try again.');
+            });
+        }
+
+        function resetFields() {
+            const taskInputs = document.querySelectorAll('input[type="number"]');
+            taskInputs.forEach((input) => (input.value = ''));
+            document.getElementById('targetAchieved').textContent = 'Target Achieved: 0%';
+        }
+    </script>
+</body>
+</html>
